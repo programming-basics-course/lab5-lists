@@ -37,7 +37,7 @@ BUS find(dllnode*, unsigned short int);
 void insert(dllnode**, BUS);
 
 // Delete a single element from the list
-void delele_element(dllnode*, unsigned short int);
+bool delete_element(dllnode**, unsigned short int);
 
 // Delete an entire linked list
 void delete_dllist(dllnode*);

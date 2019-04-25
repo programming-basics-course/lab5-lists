@@ -95,28 +95,46 @@ void insert(dllnode** head, BUS bus)
 
 
 // Delete a single element from the list
-void delele_element(dllnode* head, unsigned short int licence_plate)
+bool delete_element(dllnode** head, unsigned short int licence_plate)
 {
 	dllnode* trav = new dllnode;
-	trav = head;
+	trav = *head;
 
 	while (trav)
 	{
+
 		if (trav->bus.license_plate == licence_plate)
 		{
+			// The element to delete is the first one
+			if (trav == *head)
+			{
+				trav->next->prev = NULL;
+				*head = trav->next;
+				delete trav;
+				return true;
+			}
+
+			// The element to delte it the last one
+			if (trav->next == NULL)
+			{
+				trav->prev->next = NULL;
+				delete trav;
+				return true;
+			}
+
 
 			trav->prev->next = trav->next;
 			trav->next->prev = trav->prev;
 
 			//delete trav->bus;
 			delete trav;
-			return;
+			return true;
 		}
 
 		trav = trav->next;
 	}
 
-	std::cout << "Couldn't find the bus to delete from the list" << std::endl;
+	return false;
 
 }
 
