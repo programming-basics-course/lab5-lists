@@ -113,12 +113,8 @@ int main()
 			case 'd':	// delete all data
 				
 				std::cin >> lisence_plate;
-				if (delete_element(&road, lisence_plate))
-				{
-				}
-				else if (delete_element(&garage, lisence_plate))
-				{
-				}
+				if (delete_element(&road, lisence_plate));
+				else if (delete_element(&garage, lisence_plate));
 				else
 				{
 					std::cout << "There is no bus with such plates!\n";
@@ -129,17 +125,17 @@ int main()
 
 			case 'h':	// help -- information about all of the commands
 				std::cout	<< "i LICENCE_PLATE\n"
-							<< "----a bus has entered the garage\n";
+							<< "----a bus has entered the garage\n\n";
 				std::cout	<< "o LICENCE_PLATE\n"
-							<< "----a bus has left the garage\n";
+							<< "----a bus has left the garage\n\n";
 				std::cout	<< "n LICENCE_PLATE DRIVER_NAME DRIVER_SURNAME ROUTE\n"
-							<< "----add a new bus to the garage\n";
+							<< "----add a new bus to the garage\n\n";
 				std::cout	<< "d LICENCE_PLATE DRIVER_NAME DRIVER_SURNAME ROUTE\n"
-							<< "----add a new bus to the garage\n";
+							<< "----add a new bus to the garage\n\n";
 				std::cout	<< "s\n"
-							<< "----to show information about buses in garage and on the road\n";
+							<< "----to show information about buses in garage and on the road\n\n";
 				std::cout	<< "e\n"
-							<< "----exit the program\n";
+							<< "----exit the program\n\n";
 				break;
 
 			case 'e':	// exit
@@ -163,5 +159,6 @@ int main()
 
 	delete_dllist(garage);
 	delete_dllist(road);
+
 	return 0;
 }

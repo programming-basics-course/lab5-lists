@@ -28,7 +28,7 @@ struct dllnode
 
 
 // Create a doubly-linked list
-dllnode* create();
+dllnode* create(BUS bus);
 
 // Search throught a linked list to find an element
 BUS find(dllnode*, unsigned short int);

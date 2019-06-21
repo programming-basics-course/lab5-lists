@@ -38,11 +38,11 @@ void BUS::print_info()
 
 
 // Create a doubly-linked list
-dllnode* create()
+dllnode* create(BUS bus)
 {
 	dllnode* dllist = new dllnode;
 
-	dllist->bus = BUS();
+	dllist->bus = bus;
 	dllist->prev = NULL;
 	dllist->next = NULL;
 
@@ -53,10 +53,7 @@ dllnode* create()
 // Search throught a linked list to find an element
 BUS find(dllnode* head, unsigned short int license_plate)
 {
-	dllnode* trav = new dllnode;
-	trav = head;
-
-	bool there_is = false;
+	dllnode* trav = head;
 
 	while (trav)
 	{
@@ -66,7 +63,6 @@ BUS find(dllnode* head, unsigned short int license_plate)
 		trav = trav->next;
 	}
 
-	std::cout << "Sorry, there is no bus with this number is this list.\n";
 	return BUS();
 }
 
@@ -76,12 +72,12 @@ void insert(dllnode** head, BUS bus)
 {
 	// Check on both NULLs ??
 
-	// Empty list case
-	if ((*head)->bus.drivers_name == "")
+	if (*head == NULL)
 	{
-		(*head)->bus = bus;
+		*head = create(bus);
 		return;
 	}
+
 
 	dllnode* new_bus = new dllnode;
 	new_bus->bus = bus;
@@ -108,6 +104,13 @@ bool delete_element(dllnode** head, unsigned short int licence_plate)
 			// The element to delete is the first one
 			if (trav == *head)
 			{
+				if (trav->next == NULL)
+				{
+					delete trav;
+					*head = NULL;
+					return true;
+				}
+
 				trav->next->prev = NULL;
 				*head = trav->next;
 				delete trav;
@@ -156,6 +159,11 @@ void print_info(dllnode* head)
 {
 	std::cout << "INFORMARION ABOUT THE LIST" << std::endl << std::endl;
 
+	if (!head)
+	{
+		std::cout << "The list is empty.\n";
+	}
+
 	while (head)
 	{
 		head->bus.print_info();
@@ -179,7 +187,7 @@ dllnode* retrive_from_file(std::string address)
 	}
 
 	// Create an empty list
-	dllnode* head = create();
+	dllnode* head = NULL;
 
 	while (file.peek() != EOF)
 	{
@@ -203,18 +211,20 @@ void save_to_file(dllnode* head, std::string address)
 		return;
 	}
 
-	dllnode* trav = new dllnode;
-	trav = head;
+	dllnode* trav = head;
 
 	while (trav)
 	{
 		file << trav->bus.license_plate << "\t\t";
 		file << trav->bus.drivers_name << " ";
 		file << trav->bus.drivers_surname << "\t\t";
-		if (trav->next)
-			file << trav->bus.route << "\n";
+		file << trav->bus.route;
+
+		if (trav->next != NULL)
+			file << "\n";
 
 		trav = trav->next;
+
 	}
 
 	file.close();
